@@ -1,0 +1,19 @@
+{
+    "name": "mordiagne/poo_incription_smd",
+    "autoload": {
+        "psr-4": {
+            "App\\Src\\": "src/",
+            "App\\Models\\": "models/",
+            "App\\Core\\": "core/",
+            "App\\Config\\": "config/",
+            "App\\Controller\\": "controllers/",
+            "App\\Exception\\": "exceptions/",
+            "App\\View\\": "templates/"
+        }
+    },
+    "authors": [{
+        "name": "mordiagne96",
+        "email": "mordiagne1960@gmail.com"
+    }],
+    "require": {}
+}

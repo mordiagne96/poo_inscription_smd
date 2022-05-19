@@ -1,0 +1,3 @@
+mdl:
+
+user(id, nomcomplet, adresse, login, password, grade, motif, date, matricule, sexe)
