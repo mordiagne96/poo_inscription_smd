@@ -53,17 +53,12 @@
                 return $this;
         }
 
-        public function insert():int{
+        public function insert():int|string{
             $db = new DataBase();
             $db->connexionBD();
             $sql = "insert into ".self::getTable()." (nom_complet,adresse,grade,sexe,role) values(?,?,?,?,?);";
-            // echo $sql; die;
-            $query = $db->getDb()->prepare($sql);
             // var_dump($this->nomComplet, $this->adresse, $this->login, $this->password);die;
-            $query = $query->execute(array($this->nomComplet, $this->adresse , $this->grade, "M", self::getRole()));
-            return $query;
-    }
-        
-
-        
+            $result = $db->executeUpdate($sql, [$this->nomComplet, $this->adresse , $this->grade, $this->sexe, self::getRole()]);
+            return $result;
+        }                
     }

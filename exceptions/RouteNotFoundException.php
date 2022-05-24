@@ -6,6 +6,5 @@
         
         public $message="Fii Page nekoufii boy , Erreur 404 ";
         
-
     }
  

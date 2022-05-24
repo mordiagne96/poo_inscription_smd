@@ -1,37 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="<?php $url_base ?>/css/style.css">
-    <title>Document</title>
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;" >
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="#">Gest-Ins</a>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">Accueil</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Gest-inscriptions</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="#" tabindex="-1" aria-disabled="true">Gest-Utilisateurs</a>
-        </li>
-      </ul>
-      
-      <a href="<?php $url_base ?>/Securite/logout"><btn class="btn btn-primary">Deconnexion</btn></a>
-    </div>
-  </div>
-</nav> -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +18,13 @@
 
     <!-- Custom styles for this template-->
     <link href="<?= $front_template ?>/accueil/css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?php $url_base ?>/css/style.css">
+    <!-- <link rel="stylesheet" href="<?= $url_base ?>bootstrap5/dist/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="<?= $url_base ?>css/style.css">
+    <link rel="stylesheet" href="<?= $url_base ?>css/animate.css">
+    <!-- <link rel="stylesheet" href="<?= $url_base ?>bootstrap5/dist/js/bootstrap.min.js"> -->
+
 
 
 </head>
@@ -78,7 +50,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="<?= $url_base ?>Securite/login">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -89,62 +61,58 @@
             <!-- Heading -->
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Classes</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="<?php $url_base ?>/Classe/lister">Lister classe</a>
-                        <a class="collapse-item" href="cards.html">Nouvelle class</a>
-                    </div>
-                </div>
-            </li>
-
+            <?php if($role->isRP()): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php $url_base ?>/Classe/lister">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Classes</span></a>
+                </li>
+            <?php endif; ?>
             <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Professeur</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="<?php $url_base ?>/Professeur/lister">Lister Professeur</a>
-                        <a class="collapse-item" href="<?php $url_base ?>/Professeur/add">Nouveau Professeur</a>
-                    </div>
-                </div>
-            </li>
+            <?php if($role->isRP()): ?>
 
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php $url_base ?>/Professeur/lister">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Professeurs</span></a>
+                </li>
 
+            <?php endif; ?>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Modules</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="<?php $url_base ?>/Module/lister">Liste Module</a>
-                    </div>
-                </div>
-            </li>
+            <?php if($role->isRP()):?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php $url_base ?>/Module/lister">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Modules</span></a>
+                </li>
+            <?php endif; ?>
+
+            <?php if($role->isAC()): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php $url_base ?>/Demande/lister">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>etudiant</span></a>
+                </li>
+            <?php endif; ?>
 
             <!-- Nav Item - Charts -->
+            <?php if($role->isAC() || $role->isEtudiant()): ?>
             <li class="nav-item">
                 <a class="nav-link" href="<?php $url_base ?>/Inscription/lister">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Inscriptions</span></a>
             </li>
-
+            <?php endif; ?>
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?php $url_base ?>/Demande/lister">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Demandes</span></a>
-            </li>
-
+            <?php if($role->isRP() || $role->isAC() || $role->isEtudiant()): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php $url_base ?>/Demande/lister">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Demandes</span></a>
+                </li>
+            <?php endif; ?>
+                
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -211,5 +179,5 @@
                         <li><a href="<?php $url_base ?>/Securite/logout">Logout</a></li>
                         
                     </ul>
-
+                
                 </nav>

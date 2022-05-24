@@ -13,7 +13,8 @@ use App\Core\DataBase;
         protected string $login;
         protected string $password;
         protected static string $role;
-         
+        protected string $sexe;
+        
         /**
          * Get the value of id
          */ 
@@ -149,7 +150,7 @@ use App\Core\DataBase;
         {
             $db = new DataBase();
             $db->connexionBD();
-            $sql = "select * from ".self::getTable()." where role like '".self::getRole()."'";
+            $sql = "select * from ".self::getTable()." where role like '".self::getRole()."' and etat_data=0";
             $query  = $db->getDb()->prepare($sql,[]);
             $query->execute();
             return  $query->fetchAll();
@@ -164,7 +165,7 @@ use App\Core\DataBase;
                 return $query->fetch();
         }
 
-        public function insert():int{
+        public function insert():int|string{
                 $db = new DataBase();
                 $db->connexionBD();
                 $sql = "insert into ".self::getTable()." (nom_complet,adresse,login,password,sexe,role) values(?,?,?,?,?,?);";
@@ -173,5 +174,26 @@ use App\Core\DataBase;
                 // var_dump($this->nomComplet, $this->adresse, $this->login, $this->password);die;
                 $query = $query->execute(array($this->nomComplet, $this->adresse, $this->login, $this->password , "M", self::getRole()));
                 return $query;
+        }
+
+
+        /**
+         * Get the value of sexe
+         */ 
+        public function getSexe()
+        {
+                return $this->sexe;
+        }
+
+        /**
+         * Set the value of sexe
+         *
+         * @return  self
+         */ 
+        public function setSexe($sexe)
+        {
+                $this->sexe = $sexe;
+
+                return $this;
         }
     }

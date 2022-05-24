@@ -1,6 +1,8 @@
 <?php
 namespace App\Models;
+use App\Core\DataBase;
 use App\Core\Model;
+
     class Classe extends Model{
         private int $id;
         private string $libelle;
@@ -112,5 +114,25 @@ use App\Core\Model;
                 $this->niveau = $niveau;
 
                 return $this;
+        }
+
+        public function insert():int|string{
+                $db = new DataBase();
+                $db->connexionBD();
+                $sql = "insert into classe (libelle, filiere, niveau) values(?,?,?)";
+                $result = $db->executeUpdate($sql, [$this->libelle, $this->filiere, $this->niveau]);
+                return $result;
+        }
+
+        public function getAttributes(){
+                var_dump(get_object_vars($this));
+        }
+
+        public function update():int{
+                $db = new DataBase();
+                $db->connexionBD();
+                $sql = "update classe set libelle = ? , filiere = ?, niveau = ? where id = ?";
+                $result = $db->executeUpdate($sql, [$this->libelle, $this->filiere, $this->niveau, $this->id]);
+                return $result;
         }
     }

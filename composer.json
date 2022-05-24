@@ -15,5 +15,7 @@
         "name": "mordiagne96",
         "email": "mordiagne1960@gmail.com"
     }],
-    "require": {}
+    "require": {
+        "digiaonline/instance-factory": "^1.1"
+    }
 }

@@ -6,6 +6,8 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Digia\\InstanceFactory\\' => array($vendorDir . '/digiaonline/instance-factory/src'),
+    'App\\View\\' => array($baseDir . '/templates'),
     'App\\Src\\' => array($baseDir . '/src'),
     'App\\Models\\' => array($baseDir . '/models'),
     'App\\Exception\\' => array($baseDir . '/exceptions'),

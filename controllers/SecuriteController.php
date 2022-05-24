@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
-use App\Config\Constante;
-use App\Models\User;
 use App\Core\View;
+use App\Models\User;
+use App\Core\Session;
+use App\Config\Constante;
 
     class SecuriteController extends Controller{
 
@@ -14,8 +15,8 @@ use App\Core\View;
         }
 
         public function login(){
+            // session_start();
 
-            // echo "vous etes sur la methode login";
             if(isset($_POST["connexion"])){
 
                 extract($_POST);
@@ -26,11 +27,14 @@ use App\Core\View;
     
                 if($user != null){
 
-                    session_start();
+                    // session_start();
 
                     if(strcmp($user["role"], Constante::ROLE_PROFESSEUR) != 0){
                         
-                        $_SESSION["user"] = $user;
+                        // $_SESSION["user"] = $user;
+
+                        $session = new Session();
+                        $session->setSession("user",$user);
                         
                         $this->view->load("securite/accueil");
                         
@@ -41,7 +45,11 @@ use App\Core\View;
                     $this->view->redirect("securite/connexion");
                 }
             }else{
-                $this->view->redirect("securite/connexion");
+                if(isset($_SESSION["user"])){
+                    $this->view->load("securite/accueil");
+                }else{
+                    $this->view->redirect("securite/connexion");
+                }
             }
 
             // var_dump($user);
@@ -49,6 +57,7 @@ use App\Core\View;
         }
 
         public function logout(){
+            session_start();
             session_unset();
             $this->view->redirect("securite/connexion");
         }

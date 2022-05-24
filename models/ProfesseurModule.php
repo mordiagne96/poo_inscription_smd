@@ -3,19 +3,15 @@ namespace App\Models;
 use App\Core\DataBase;
 use App\Core\Model;
 
-    class ProfesseurClasseAnnee extends Model{
+    class ProfesseurModule extends Model{
         private int $id;
-
+        
         public function professeur():Professeur{
             return new Professeur();
         }
 
-        public function classe():Classe{
-            return new Classe();
-        }
-
-        public function anneeScolaire():AnneeScolaire{
-            return new AnneeScolaire();
+        public function module():Module{
+            return new Module();
         }
 
         /**
@@ -38,11 +34,11 @@ use App\Core\Model;
                 return $this;
         }
 
-        public function insetProfesseurClasseAnnee(int $idProfesseur, int $idClasse,int $idAnnee=4):int{
+        public function insertProfesseurModule(int $idProfesseur,int $idModule):int{
             $db = new DataBase();
             $db->connexionBD();
-            $sql = "insert into professeur_classe_annee (professeur_id, classe_id, annee_scolaire_id) value(?,?,?)";
-            $result = $db->executeUpdate($sql, [$idProfesseur, $idClasse, $idAnnee]);
+            $sql = "insert into professeur_module (professeur_id, module_id) values(?,?)";
+            $result = $db->executeUpdate($sql,[$idProfesseur,$idModule]);
             return $result;
         }
     }

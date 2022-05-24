@@ -14,8 +14,7 @@
             return $table;
         }
         
-        public function insert():int{
-            
+        public function insert():int|string{
             return 0;
         }
 
@@ -27,10 +26,12 @@
             return 0;
         }
 
+        
+
         public static function findAll():array{
             $db= new DataBase();
             $db->connexionBD();  
-            $query  = $db->getDb()->prepare("select * from ".self::getTable(), []);
+            $query  = $db->getDb()->prepare("select * from ".self::getTable()." where etat_data=0", []);
             $query->execute();
             return $query ->fetchAll();
         }
@@ -52,10 +53,25 @@
             return null;
         }
         public static function findById(int $id):array{
-            return [];
+            $db= new DataBase();
+            $db->connexionBD();  
+            $query  = $db->getDb()->prepare("select * from ".self::getTable()." where id=$id and etat_data=0", []);
+            $query->execute();
+            return $query ->fetch();
         }
 
         public static function findOneBy():array{
             return [];
         }
+
+        public static function deleteById(int $id):int{
+            $db = new DataBase();
+                $db ->connexionBD();
+                $sql = "update ".self::getTable()." set etat_data = 1 where id=?";
+                // $sql = "update module set etat_data = 1 where id=?";
+                // dd($sql);
+                $result = $db->executeDelete($sql, [$id]);
+                return $result;
+        }
+
     }

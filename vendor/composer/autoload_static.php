@@ -7,8 +7,13 @@ namespace Composer\Autoload;
 class ComposerStaticInit9859d5fdbaa5313bc47e382ee273dcbc
 {
     public static $prefixLengthsPsr4 = array (
+        'D' => 
+        array (
+            'Digia\\InstanceFactory\\' => 22,
+        ),
         'A' => 
         array (
+            'App\\View\\' => 9,
             'App\\Src\\' => 8,
             'App\\Models\\' => 11,
             'App\\Exception\\' => 14,
@@ -19,6 +24,14 @@ class ComposerStaticInit9859d5fdbaa5313bc47e382ee273dcbc
     );
 
     public static $prefixDirsPsr4 = array (
+        'Digia\\InstanceFactory\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/digiaonline/instance-factory/src',
+        ),
+        'App\\View\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/templates',
+        ),
         'App\\Src\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Core\DataBase;
 use App\Core\Model;
 
     class Module extends Model{
@@ -54,5 +55,13 @@ use App\Core\Model;
                 $this->libelle = $libelle;
 
                 return $this;
+        }
+
+        public function insert():int|string{
+                $db = new DataBase();
+                $db->connexionBD();
+                $sql = "insert into module (libelle) values(?)";
+                $result = $db->executeUpdate($sql, [$this->libelle]);
+                return $result;
         }
     }

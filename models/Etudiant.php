@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Models;
+use App\Core\DataBase;
 use App\Config\Constante;
 
     class Etudiant extends User{
         private string $matricule;
-        private string $sexe;
 
         public function __construct(){
             self::$role = Constante::ROLE_ETUDIANT;
@@ -35,24 +35,31 @@ use App\Config\Constante;
                 return $this;
         }
 
-        /**
-         * Get the value of sexe
-         */ 
-        public function getSexe()
-        {
-                return $this->sexe;
-        }
+        public function insert():int|string{
+            $db = new DataBase();
+            $db->connexionBD();
+            $sql = "insert into ".self::getTable()." (nom_complet,matricule,adresse,sexe,role,login,password) values(?,?,?,?,?,?,?)";
+            // echo $sql;die;
+            // var_dump($this->nomComplet, $this->adresse, $this->login, $this->password);die;
+            $result = $db->executeUpdate($sql, [$this->nomComplet,$this->matricule, $this->adresse , $this->sexe, self::getRole(), $this->login, $this->password]);
+            // echo $result;die;
+            return $result;
+        }  
 
-        /**
-         * Set the value of sexe
-         *
-         * @return  self
-         */ 
-        public function setSexe($sexe)
-        {
-                $this->sexe = $sexe;
-
-                return $this;
+        public function genererMatricule(){
+            $db = new DataBase();
+            $db->connexionBD();
+            $sql = "select max(id) from ".self::getTable()." where role like '".self::getRole()."'";
+            $query  = $db->getDb()->prepare($sql);
+            $query->execute();
+            $result = $query->fetch();
+            if($result == null) {
+                $id = 1;
+            }else{
+                $id = $result[0]+1;
+            }
+            $numero = "MAT-".date('Y').rand(0,9).$id."E";
+            $this->matricule = $numero;
         }
 
         // methodes

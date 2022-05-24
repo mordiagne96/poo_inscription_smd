@@ -13,6 +13,7 @@ use App\Exception\RouteNotFoundException;
 
         public function __construct(){
             $this->request = new Request;
+            session_start();
         }
 
         public function route(string $uri, array $action){
@@ -23,8 +24,8 @@ use App\Exception\RouteNotFoundException;
             if($this->request->isGet()){
                 $uri = $this->request->getUri();
                 // var_dump($uri[0]);die;
-    
-                if(isset($this->routes["/".$uri[0]])){
+                // session_start();
+                if(isset($this->routes["/".$uri[0]]) && isset($_SESSION["user"])){
                     $objectController = $uri[0]."Controller";
                     $object = "App\Controller\\".$objectController;
                     // dd($object);
@@ -40,7 +41,7 @@ use App\Exception\RouteNotFoundException;
                         
                     }
                 }else{
-                    if($uri[0] == ""){
+                    if($uri[0] == "" || isset($this->routes["/".$uri[0]])){
                         $controller = new SecuriteController();
                         $controller -> index();
                     }else{

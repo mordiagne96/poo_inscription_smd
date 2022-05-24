@@ -8,19 +8,22 @@ class View{
     private $tpl;
 
     public function load($page,$data=null){
-        
-        // var_dump(Constante::getRoot());
-        // $this->tpl = new \Smarty();
-        // dd($data);
+
         $directory = Constante::getRoot()."templates/".$page.".html.php";
 
         
         if(file_exists($directory)){
+
+            // session_start();
+            
             $front_template = Constante::urlBase()."templates";
             $url_base = Constante::urlBase();
             $base_template = Constante::getRoot();
-            // var_dump($front_template);die;
-                require_once $directory;
+            $test = Constante::getWebFront();
+            $role = new Role();
+            // var_dump($role->isRP());
+            // var_dump($role->isEtudiant());
+            require_once $directory;
 
         }else{
             echo "Ce chemin ".$directory." n'existe pas dans ".Constante::getRoot()."templates/";
@@ -30,9 +33,10 @@ class View{
     }
 
     public function redirect($uri) {
+        
         // $base = Constante::urlBase();
-        // echo Constante::getRoot()."templates/".$uri.".html.php";die("sf");
-        header("location:".Constante::urlBase().$uri);
+        // echo Constante::getRoot()."templates/".$uri.".html.php";
+        header("location:".Constante::urlBase());
         // header("location:".$base.$uri);
         // $directory = Constante::getRoot()."templates/".$page.".html.php";
 
