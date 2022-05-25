@@ -56,6 +56,7 @@ if (btns_modifier != null) {
             // console.log(e.target.value); 
             switch (table.getAttribute("data-name")) {
                 case "classe":
+                    // alert("ok");
                     modifier_classe(e);
                     break;
                     // case "professeur":
@@ -180,6 +181,7 @@ function newLineClasse(table) {
     for (let i = 0; i < 3; i++) {
         let td = document.createElement("td");
         let input = document.createElement("input");
+        td.classList.add("td-classe");
         input.setAttribute("type", "text");
         input.setAttribute("class", "input-td");
         input.setAttribute("name", "classes[]");
@@ -265,12 +267,17 @@ function newLineClasse(table) {
                 td.appendChild(btn_modifier);
                 td.appendChild(btn_supprimer);
                 td.parentElement.classList.add("pulse");
+
                 setTimeout(() => {
                     td.parentElement.classList.remove("pulse");
                 }, 3000);
 
                 btn_supprimer.addEventListener("click", async(e) => {
                     delete_classe(e)
+                })
+
+                btn_modifier.addEventListener("click", async(e) => {
+                    modifier_classe(e);
                 })
             }
         }
@@ -612,5 +619,102 @@ async function getDataClasse() {
 }
 
 function modifier_classe(e) {
+    let ligne = e.target.parentElement.parentElement
+    let td = e.target.parentElement;
+    var tds = ligne.querySelectorAll(".td-classe");
+    // console.log(tds);
+    e.target.parentElement.parentElement.style.cssText = `background: rgb(242,246,246);
+    background: linear-gradient(322deg, rgba(242,246,246,0.8071603641456583) 0%, rgba(237,191,20,0.2553396358543417) 0%);`;
+    // e.target.parentElement.parentElement.classList.add("pulse");
+    // e.target.innerHTML = "Valider";
+    // e.target.setAttribute("class", "btn btn-success pulse");
+    for (var i = 0; i < tds.length; i++) {
+        // let td = document.createElement("td");
+        let input = document.createElement("input");
+        input.setAttribute("type", "text");
+        input.setAttribute("class", "input-td");
+        input.setAttribute("name", "classes[]");
+        input.value = tds[i].innerHTML;
+        tds[i].innerHTML = "";
+        tds[i].appendChild(input);
+    }
+    e.target.classList.add("hide");
+    e.target.nextElementSibling.classList.add("hide");
+    let btn_valider = document.createElement("button");
+    let btn_annuler = document.createElement("button");
+    btn_valider.setAttribute("class", "btn btn-success");
+    btn_annuler.setAttribute("class", "btn btn-info");
+    btn_valider.innerHTML = "Valider";
+    btn_annuler.innerHTML = "Annuler";
+    btn_valider.value = e.target.value;
+    btn_annuler.value = e.target.nextElementSibling.value;
+    td.appendChild(btn_valider);
+    td.appendChild(btn_annuler);
+
+    var inputs = ligne.querySelectorAll("input[name='classes[]']")
+
+    btn_valider.addEventListener("click", async() => {
+        var error = 0;
+        inputs.forEach(el => {
+            if (el.value.trim() === "") {
+                error++;
+            }
+        });
+
+        if (error == 0) {
+            var classe_update = {
+                "id": btn_valider.value,
+                "libelle": inputs[0].value,
+                "filiere": inputs[1].value,
+                "niveau": inputs[2].value
+            }
+        }
+
+        let result = await update_classe(classe_update);
+        if (result > 0) {
+            let alert = document.querySelector(".alert-warning");
+            alert.classList.remove("hide");
+            setTimeout(() => {
+                alert.classList.add("hide");
+            }, 5000);
+
+            inputs.forEach(elt => {
+                elt.parentElement.innerHTML = elt.value;
+            });
+
+            td.parentElement.classList.add("pulse");
+            setTimeout(() => {
+                td.parentElement.classList.remove("pulse");
+            }, 3000);
+
+            e.target.classList.remove("hide");
+            e.target.nextElementSibling.classList.remove("hide");
+
+            td.removeChild(btn_valider);
+            td.removeChild(btn_annuler);
+            e.target.parentElement.parentElement.style.cssText = "";
+
+        }
+
+        console.log(classe_update);
+    })
+
+
+    async function update_classe(object) {
+        const form = new FormData()
+        form.append("data", JSON.stringify(object))
+        try {
+            let response = await fetch("http://localhost:8002/Classe/edit", {
+                method: "POST",
+                body: form
+            });
+
+            return await response.text();
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
 }

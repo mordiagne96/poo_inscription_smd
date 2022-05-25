@@ -132,7 +132,7 @@ use App\Core\Model;
                 $db = new DataBase();
                 $db->connexionBD();
                 $sql = "update classe set libelle = ? , filiere = ?, niveau = ? where id = ?";
-                $result = $db->executeUpdate($sql, [$this->libelle, $this->filiere, $this->niveau, $this->id]);
+                $result = $db->executeUpdateBy($sql, [$this->libelle, $this->filiere, $this->niveau, $this->id]);
                 return $result;
         }
     }

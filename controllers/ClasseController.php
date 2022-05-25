@@ -42,23 +42,42 @@
                 $this->view->load("classe/nouvelleClasse",$data);
             }
 
-            if($this->request->isPost()){
-                // echo "modification";
-                $idAModifier = $this->request->getUri()[2];
-                $classe = new Classe();
-                extract($_POST);
-                $classe->setId($idAModifier);
-                $classe->setLibelle($libelle);
-                $classe->setFiliere($filiere);
-                $classe->setNiveau($niveau);
-                $result = $classe->update();
-                // echo $result;
-                header("location:".Constante::urlBase()."Classe/lister");
 
-
-
-            }
+            //update classe avec php
+            //*************************** */
+            // if($this->request->isPost()){
+            //     // echo "modification";
+            //     die("modification classe fetch");
+            //     $idAModifier = $this->request->getUri()[2];
+            //     $classe = new Classe();
+            //     extract($_POST);
+            //     $classe->setId($idAModifier);
+            //     $classe->setLibelle($libelle);
+            //     $classe->setFiliere($filiere);
+            //     $classe->setNiveau($niveau);
+            //     $result = $classe->update();
+            //     // echo $result;
+            //     header("location:".Constante::urlBase()."Classe/lister");
+            // }
            
+            if($this->request->isPost()){
+                extract($_POST);
+                $datas = json_decode($data);
+                if(isset($datas)){
+                    // die($datas->id);
+                        $classe = new Classe();
+                        $classe->setId($datas->id);
+                        $classe->setLibelle($datas->libelle);
+                        $classe->setFiliere($datas->filiere);
+                        $classe->setNiveau($datas->niveau);
+                        $result = $classe->update();
+                        if($result > 0){
+                            echo $result;
+                        }else{
+                            echo 0;
+                        }
+                }
+            }
 
 
         }

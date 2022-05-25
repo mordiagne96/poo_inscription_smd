@@ -14,6 +14,9 @@
         Une erreur est survenue lors de l'ajout
         <i class="fa fa-close" ></i>
       </div>
+      <div class="alert alert-warning slideExpandUp hide" role="alert">
+        Classe Modifier avec succés
+      </div>
       <div class='container-fluid d-flex justify-content-between bg-gradient-primary' style="padding:1vh;color:white;font-size:2rem;">
         <a href="#" class="">
                 <button class="btn btn-circle bg-gradient-success pulse" id="new_element" data-name="classe"><i class="fa fa-plus"></i></button>
@@ -34,9 +37,9 @@
           
             <?php foreach($data as $prof): ?>
                 <tr>
-                    <td><?= $prof['libelle'] ?></td>
-                    <td><?= $prof['filiere'] ?></td>
-                    <td><?= $prof['niveau'] ?></td>
+                    <td class="td-classe"><?= $prof['libelle'] ?></td>
+                    <td class="td-classe"><?= $prof['filiere'] ?></td>
+                    <td class="td-classe"><?= $prof['niveau'] ?></td>
                   <td class="td-action">
                     <!-- <a href="<?= $url_base."Classe/edit/".$prof["id"] ?>">
                         <button class="btn btn-warning" value="<?= $prof["id"] ?>">Modifier</button>

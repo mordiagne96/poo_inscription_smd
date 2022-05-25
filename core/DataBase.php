@@ -23,6 +23,16 @@
             }
          
         }
+        public function executeUpdateBy(string $sql, array $data):int|string{
+            try{
+                $result = $this->getDb()->prepare($sql);
+                $result = $result->execute($data);
+                return $result;
+            }catch(\PDOException $e){
+                return $e->getMessage();
+            }
+         
+        }
         public function executeDelete(string $sql, array $data):int|string{
             try{
                 $result = $this->getDb()->prepare($sql);
